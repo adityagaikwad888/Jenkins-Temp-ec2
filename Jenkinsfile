@@ -1,8 +1,8 @@
 pipeline {
     agent any
     parameters {
-        choice(name : 'NUMBER,
-               choice: [10,20,30,40,50],
+        choice(name: 'NUMBER',
+               choices: ['10', '20', '30', '40', '50'],
                description: 'Select the Num')
     }
     options {
@@ -21,19 +21,19 @@ pipeline {
         }
         stage('Relative Path') {
             steps {
-                sh("./scripts/fibonacci.sh ${env.NUMBER}")
+                sh("./scripts/fibonacci.sh ${params.NUMBER}")
             }
         }
         stage('Full Path') {
             steps {
-                sh("${env.WORKSPACE}/scripts/fibonacci.sh ${env.NUMBER}")
+                sh("${env.WORKSPACE}/scripts/fibonacci.sh ${params.NUMBER}")
             }
         }
 
         stage('Change Directory') {
             steps {
                 dir("${env.WORKSPACE}/scripts") {
-                    sh("./fibonacci.sh ${env.NUMBER}")
+                    sh("./fibonacci.sh ${params.NUMBER}")
                 }
             }
         }
